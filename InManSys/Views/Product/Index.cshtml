@@ -1,0 +1,41 @@
+﻿@model IEnumerable<InManSys.Models.Product>
+
+<h2>Products</h2>
+
+<p><a asp-action="Create" class="btn btn-primary">Add Product</a></p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Supplier</th>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ProductImage))
+                    {
+                        <img src="@item.ProductImage" width="80" />
+                    }
+                </td>
+                <td>@item.Supplier?.SupplierName</td>
+                <td>@item.Category?.CategoryName</td>
+                <td>@item.ProductName</td>
+                <td>@item.UnitPrice</td>
+                <td>@item.Quantity</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

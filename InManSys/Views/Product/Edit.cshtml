@@ -1,0 +1,65 @@
+﻿@model InManSys.Models.Product
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<h2 class="mb-3">Edit Product</h2>
+
+<form asp-action="Edit" enctype="multipart/form-data" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="ProductId" />
+
+    <div class="form-group mb-2">
+        <label asp-for="ProductName"></label>
+        <input asp-for="ProductName" class="form-control" />
+        <span asp-validation-for="ProductName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="UnitPrice"></label>
+        <input asp-for="UnitPrice" class="form-control" />
+        <span asp-validation-for="UnitPrice" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="Quantity"></label>
+        <input asp-for="Quantity" class="form-control" />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="ReorderLevel"></label>
+        <input asp-for="ReorderLevel" class="form-control" />
+        <span asp-validation-for="ReorderLevel" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="SupplierId">Supplier</label>
+        <select asp-for="SupplierId" asp-items="ViewBag.SupplierId" class="form-control"></select>
+        <span asp-validation-for="SupplierId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="CategoryId">Category</label>
+        <select asp-for="CategoryId" asp-items="ViewBag.CategoryId" class="form-control"></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="ImageFile">Product Image</label><br />
+        @if (!string.IsNullOrEmpty(Model.ProductImage))
+        {
+            <img src="@Model.ProductImage" alt="Product Image" width="120" class="mb-2 rounded shadow-sm" />
+            <br />
+        }
+        <input asp-for="ImageFile" type="file" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">💾 Save</button>
+    <a asp-action="Index" class="btn btn-secondary">⬅️ Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

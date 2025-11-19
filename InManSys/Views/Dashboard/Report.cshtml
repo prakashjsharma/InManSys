@@ -1,0 +1,131 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@using Newtonsoft.Json
+@{
+    var catData = ((IEnumerable<dynamic>)ViewBag.ProductsByCategory).ToList();
+    var supData = ((IEnumerable<dynamic>)ViewBag.ProductsBySupplier).ToList();
+}
+<script>
+    window.dashboardData = {
+        catLabels: @Html.Raw(JsonConvert.SerializeObject(catData.Select(x => (string)x.Category))),
+        catValues: @Html.Raw(JsonConvert.SerializeObject(catData.Select(x => (int)x.Count))),
+        supLabels: @Html.Raw(JsonConvert.SerializeObject(supData.Select(x => (string)x.Supplier))),
+        supValues: @Html.Raw(JsonConvert.SerializeObject(supData.Select(x => (int)x.Count)))
+    };
+</script>
+
+<h2 class="mb-4">Inventory Dashboard</h2>
+
+<!-- Stats Cards -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5>Total Suppliers</h5>
+                <h2>@ViewBag.TotalSuppliers</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5>Total Categories</h5>
+                <h2>@ViewBag.TotalCategories</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5>Total Products</h5>
+                <h2>@ViewBag.TotalProducts</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<hr />
+
+<h3>Charts</h3>
+<div class="row mb-4">
+    <div class="col-md-6" style="height:450px !important; ">
+        <canvas id="categoryChart"></canvas>
+    </div>
+    <div class="col-md-6" style="height:450px !important;">
+        <canvas id="supplierChart"></canvas>
+    </div>
+</div>
+
+<hr />
+
+<!-- Tables with clickable rows -->
+<h3>Products by Category</h3>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Total Products</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.ProductsByCategory)
+        {
+            <tr class="modal-category" data-id="@item.Id" style="cursor:pointer;">
+                <td>@item.Category</td>
+                <td>@item.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Products by Supplier</h3>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Supplier</th>
+            <th>Total Products</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.ProductsBySupplier)
+        {
+            <tr class="modal-supplier" data-id="@item.Id" style="cursor:pointer;">
+                <td>@item.Supplier</td>
+                <td>@item.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Products List</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered" id="modalTable">
+                    <thead>
+                        <tr>
+                            <th>Product Image</th>
+                            <th>Product Name</th>
+                            <th>Unit Price</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/Dashboard.js" type="text/javascript"></script>

@@ -1,0 +1,139 @@
+USE [InventoryDB]
+GO
+/****** Object:  Table [dbo].[Categories]    Script Date: 16-11-2025 15:15:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Categories](
+	[CategoryId] [int] IDENTITY(1,1) NOT NULL,
+	[CategoryName] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_Categories] PRIMARY KEY CLUSTERED 
+(
+	[CategoryId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Products]    Script Date: 16-11-2025 15:15:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Products](
+	[ProductId] [int] IDENTITY(1,1) NOT NULL,
+	[ProductName] [nvarchar](150) NOT NULL,
+	[UnitPrice] [decimal](18, 2) NOT NULL,
+	[Quantity] [int] NOT NULL,
+	[ReorderLevel] [int] NOT NULL,
+	[CategoryId] [int] NOT NULL,
+	[ProductImage] [nvarchar](max) NULL,
+	[SupplierId] [int] NOT NULL,
+ CONSTRAINT [PK_Products] PRIMARY KEY CLUSTERED 
+(
+	[ProductId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[StockTransactions]    Script Date: 16-11-2025 15:15:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[StockTransactions](
+	[TransactionId] [int] IDENTITY(1,1) NOT NULL,
+	[ProductId] [int] NOT NULL,
+	[Type] [nvarchar](10) NOT NULL,
+	[Quantity] [int] NOT NULL,
+	[TransactionDate] [datetime2](7) NOT NULL,
+ CONSTRAINT [PK_StockTransactions] PRIMARY KEY CLUSTERED 
+(
+	[TransactionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Suppliers]    Script Date: 16-11-2025 15:15:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Suppliers](
+	[SupplierId] [int] IDENTITY(1,1) NOT NULL,
+	[SupplierName] [nvarchar](100) NOT NULL,
+	[ContactNo] [nvarchar](15) NULL,
+	[Email] [nvarchar](100) NULL,
+ CONSTRAINT [PK_Suppliers] PRIMARY KEY CLUSTERED 
+(
+	[SupplierId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Categories] ON 
+GO
+INSERT [dbo].[Categories] ([CategoryId], [CategoryName]) VALUES (4, N'4014 BAKING NEEDS')
+GO
+INSERT [dbo].[Categories] ([CategoryId], [CategoryName]) VALUES (5, N'4011 Cosmetics')
+GO
+INSERT [dbo].[Categories] ([CategoryId], [CategoryName]) VALUES (6, N'4020 CANNED VEGETABLES')
+GO
+INSERT [dbo].[Categories] ([CategoryId], [CategoryName]) VALUES (7, N'4097 HB GROOMING')
+GO
+INSERT [dbo].[Categories] ([CategoryId], [CategoryName]) VALUES (8, N'4098 HB SKIN CARE')
+GO
+INSERT [dbo].[Categories] ([CategoryId], [CategoryName]) VALUES (9, N'4107 HB DEODERANT')
+GO
+SET IDENTITY_INSERT [dbo].[Categories] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Products] ON 
+GO
+INSERT [dbo].[Products] ([ProductId], [ProductName], [UnitPrice], [Quantity], [ReorderLevel], [CategoryId], [ProductImage], [SupplierId]) VALUES (8, N'Al Osra Fine Sugar 10kg', CAST(360.00 AS Decimal(18, 2)), 10, 9, 4, N'/uploads/960bdb4e-fe75-4cdc-a259-52c0daf1de2e_Al Osra Fine Sugar 10kg.jpg', 3)
+GO
+INSERT [dbo].[Products] ([ProductId], [ProductName], [UnitPrice], [Quantity], [ReorderLevel], [CategoryId], [ProductImage], [SupplierId]) VALUES (9, N'Nivea Deo Roll-On Fresh Natural 50Ml', CAST(88.00 AS Decimal(18, 2)), 5, 4, 5, N'/uploads/4fe9a105-6650-46ed-9e62-f6b0907e0afa_shopping.jpg', 4)
+GO
+INSERT [dbo].[Products] ([ProductId], [ProductName], [UnitPrice], [Quantity], [ReorderLevel], [CategoryId], [ProductImage], [SupplierId]) VALUES (10, N'MAJDI SPANISH PINE NUTS 4/15/95G', CAST(99.99 AS Decimal(18, 2)), 5, 4, 6, N'/uploads/5a8d114b-769f-4def-8374-043b0ac56fac_MAJDI SPANISH PINE NUTS 4 15 95G.jpg', 5)
+GO
+INSERT [dbo].[Products] ([ProductId], [ProductName], [UnitPrice], [Quantity], [ReorderLevel], [CategoryId], [ProductImage], [SupplierId]) VALUES (11, N'Nivea Soft Light Moisturizing Lotion', CAST(200.00 AS Decimal(18, 2)), 5, 4, 5, N'/uploads/c8f036f8-8440-470f-83da-abee4bd41426_Nivea Soft Light Moisturizing Lotion.jpg', 4)
+GO
+INSERT [dbo].[Products] ([ProductId], [ProductName], [UnitPrice], [Quantity], [ReorderLevel], [CategoryId], [ProductImage], [SupplierId]) VALUES (12, N'HANSAPLAST AQUA PROTECT 20S', CAST(200.00 AS Decimal(18, 2)), 20, 19, 7, N'/uploads/00375f05-d18f-47c3-b795-3f045d4aad68_HANSAPLAST AQUA PROTECT 20S.png', 4)
+GO
+INSERT [dbo].[Products] ([ProductId], [ProductName], [UnitPrice], [Quantity], [ReorderLevel], [CategoryId], [ProductImage], [SupplierId]) VALUES (13, N'HANSAPLAST UNIVERSAL ASSTD 40S', CAST(400.00 AS Decimal(18, 2)), 40, 35, 7, N'/uploads/6fffdbe1-80bc-47dd-98f5-9c0e35fdf1aa_HANSAPLAST UNIVERSAL ASSTD 40S.png', 4)
+GO
+INSERT [dbo].[Products] ([ProductId], [ProductName], [UnitPrice], [Quantity], [ReorderLevel], [CategoryId], [ProductImage], [SupplierId]) VALUES (14, N'NIVEA NTURAL FAIRNS L&B EXTRACT 12/625ML', CAST(199.00 AS Decimal(18, 2)), 5, 3, 8, N'/uploads/6452595a-4ec7-4cdc-9d72-a84b0cd658c3_NIVEA NTURAL FAIRNS L&B EXTRACT 12-625ML.png', 4)
+GO
+INSERT [dbo].[Products] ([ProductId], [ProductName], [UnitPrice], [Quantity], [ReorderLevel], [CategoryId], [ProductImage], [SupplierId]) VALUES (15, N'NIVEA VISAG D/EFFC EYE M/UP RMV 12/125ML', CAST(199.00 AS Decimal(18, 2)), 5, 4, 8, N'/uploads/e0d82554-6fb8-4c16-bcbb-c3dd2d8b6835_NIVEA VISAG D-EFFC EYE M-UP RMV 12-125ML.png', 4)
+GO
+INSERT [dbo].[Products] ([ProductId], [ProductName], [UnitPrice], [Quantity], [ReorderLevel], [CategoryId], [ProductImage], [SupplierId]) VALUES (16, N'NIVEA DEO SILVR PROTCT SPRAY(M) 30/150ML', CAST(199.00 AS Decimal(18, 2)), 5, 4, 9, N'/uploads/fd756b15-68ed-4c28-b80f-ffbf65fcc2db_NIVEA DEO SILVR PROTCT SPRAY(M) 30-150ML.png', 4)
+GO
+SET IDENTITY_INSERT [dbo].[Products] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Suppliers] ON 
+GO
+INSERT [dbo].[Suppliers] ([SupplierId], [SupplierName], [ContactNo], [Email]) VALUES (1, N'Nestle International Company LLP', NULL, NULL)
+GO
+INSERT [dbo].[Suppliers] ([SupplierId], [SupplierName], [ContactNo], [Email]) VALUES (3, N'AFIA INTERNATIONAL CO. FOR DIS', NULL, NULL)
+GO
+INSERT [dbo].[Suppliers] ([SupplierId], [SupplierName], [ContactNo], [Email]) VALUES (4, N'AHMED MOHAMMED ABDUL WAHAB NAG- Nivea', NULL, NULL)
+GO
+INSERT [dbo].[Suppliers] ([SupplierId], [SupplierName], [ContactNo], [Email]) VALUES (5, N'ISMAIL ALI ABUDAWOOD TRADING CO LTD - Multi Brand', NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Suppliers] OFF
+GO
+ALTER TABLE [dbo].[Products] ADD  DEFAULT ((0)) FOR [SupplierId]
+GO
+ALTER TABLE [dbo].[Products]  WITH CHECK ADD  CONSTRAINT [FK_Products_Categories_CategoryId] FOREIGN KEY([CategoryId])
+REFERENCES [dbo].[Categories] ([CategoryId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Products] CHECK CONSTRAINT [FK_Products_Categories_CategoryId]
+GO
+ALTER TABLE [dbo].[Products]  WITH CHECK ADD  CONSTRAINT [FK_Products_Suppliers_SupplierId] FOREIGN KEY([SupplierId])
+REFERENCES [dbo].[Suppliers] ([SupplierId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Products] CHECK CONSTRAINT [FK_Products_Suppliers_SupplierId]
+GO
+ALTER TABLE [dbo].[StockTransactions]  WITH CHECK ADD  CONSTRAINT [FK_StockTransactions_Products_ProductId] FOREIGN KEY([ProductId])
+REFERENCES [dbo].[Products] ([ProductId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[StockTransactions] CHECK CONSTRAINT [FK_StockTransactions_Products_ProductId]
+GO
